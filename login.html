@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hospital Lab System - Login</title>
+    <style>
+        body { margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; background: url('https://media.istockphoto.com/id/860443522/video/close-up-shot-of-microscope.avif?s=640x640&k=20&c=RmH8njtbeaWImwiqUqRq6ygm-2_l03F_wAd5i_-2Vjc=') no-repeat center center fixed; background-size: cover; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
+        h2 { color: #2f3131; font-size: 32px; margin-bottom: 20px; }
+        .tabs { display: flex; justify-content: center; margin-bottom: 20px; }
+        .tab { padding: 10px 30px; cursor: pointer; background: #e0e0e0; margin: 0 5px; border-radius: 10px 10px 0 0; font-weight: bold; }
+        .tab.active { background: #ffffff; border-bottom: 2px solid #f2f7f0ff; }
+        .form-box { background: rgba(255, 255, 255, 0.85); padding: 35px; border-radius: 15px; width: 380px; box-shadow: 0 6px 20px rgba(0,0,0,0.3); text-align: center; }
+        input, button { width: 100%; padding: 10px; margin: 10px 0; border-radius: 6px; border: 1px solid #ccc; box-sizing: border-box; }
+        button { background: #312f2fff; color: white; font-weight: bold; border: none; cursor: pointer; }
+        button:hover { background: #444; }
+        a { display: block; text-align: center; margin-top: 15px; color: #303133ff; }
+        .hidden { display: none; }
+        
+        /* This is the new style for the error message */
+        .error-message {
+            color: red;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="tabs">
+        <div class="tab active" onclick="showTab('patient')">Patient Login</div>
+        <div class="tab" onclick="showTab('staff')">Staff Login</div>
+        <div class="tab" onclick="showTab('doctor')">Doctor Login</div>
+    </div>
+
+    <div id="patient" class="form-box">
+        <form method="POST" action="/">
+            <input type="hidden" name="formType" value="patient">
+            <label>Patient ID</label>
+            <input type="text" name="pid" maxlength="6" pattern="\d{6}" oninput="this.value=this.value.replace(/[^0-9]/g,'')" required placeholder="Enter 6-digit Patient ID" title="Enter exactly 6 digits">
+            <label>Password</label>
+            <input type="password" name="ppass" required placeholder="Enter password">
+            
+            <div class="error-message">{{ERROR_MESSAGE}}</div> 
+            
+            <button type="submit">Login as Patient</button>
+        </form>
+        <form method="POST" action="/">
+            <input type="hidden" name="newpatient" value="true">
+            <button type="submit" style="background:#28a745; margin-top:10px;">New Patient? Register Here</button>
+        </form>
+    </div>
+
+    <div id="staff" class="form-box hidden">
+        <form method="POST" action="/">
+            <input type="hidden" name="formType" value="staff">
+            <label>Username</label>
+            <input type="text" name="uname" required placeholder="Enter staff username">
+            <label>Password</label>
+            <input type="password" name="upass" required placeholder="Enter password">
+            
+            <div class="error-message">{{ERROR_MESSAGE}}</div> 
+
+            <button type="submit">Login as Staff</button>
+        </form>
+    </div>
+
+    <div id="doctor" class="form-box hidden">
+        <form method="POST" action="/">
+            <input type="hidden" name="formType" value="doctor">
+            <label>Username</label>
+            <input type="text" name="dname" required placeholder="Enter doctor username">
+            <label>Password</label>
+            <input type="password" name="dpass" required placeholder="Enter password">
+            
+            <div class="error-message">{{ERROR_MESSAGE}}</div> 
+
+            <button type="submit">Login as Doctor</button>
+        </form>
+    </div>
+
+    <script>
+        function showTab(tab) {
+            // Hide all form boxes
+            ['patient', 'staff', 'doctor'].forEach(id => document.getElementById(id).classList.add('hidden'));
+            
+            // Show the selected form box
+            document.getElementById(tab).classList.remove('hidden');
+            
+            // Remove 'active' class from all tabs
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            
+            // Add 'active' class to the correct tab button (FIX APPLIED HERE)
+            // Using backticks (template literals) for correct variable interpolation
+            document.querySelector(`.tab[onclick="showTab('${tab}')"]`).classList.add('active');
+        }
+    </script>
+</body>
+</html>

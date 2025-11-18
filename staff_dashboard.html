@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Staff Panel</title>
+    <style>
+        body {font-family:Segoe UI;background:#fafaf8;padding:40px;}
+        table {border-collapse:collapse;width:95%;margin:auto;font-size:15px;}
+        th,td {border:1px solid #ccc;padding:10px;text-align:center;vertical-align:middle;}
+        th {background:#2f3131;color:white;}
+        .btn {padding:10px 18px;border-radius:6px;text-decoration:none;color:white;display:inline-block; border:none; cursor:pointer;}
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .upload-form-cell form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        .upload-form-cell input[type="file"] { width: 220px; }
+        .upload-form-cell button { background: #28a745; padding: 5px 10px; }
+        .filter-form {
+            text-align: center;
+            margin: 20px auto;
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            max-width: 500px;
+        }
+        .filter-form input[type="date"] { padding: 8px; border-radius: 4px; border: 1px solid #ccc; }
+        .filter-form button { padding: 8px 15px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>
+            <a href='/staff' class='btn' style='background:#004a99;'>View Tokens</a>
+        </div>
+        <a href='/' class='btn' style='background:black;'>Logout</a>
+    </div>
+
+    <div id="token-section">
+        <h2 style='text-align:center;margin-top:10px;'>Applied Tokens</h2>
+        
+        <div class="filter-form">
+            <form method="GET" action="/staff">
+                <label for="filter_date">Show tokens for date:</label>
+                <input type="date" id="filter_date" name="filter_date" value="{{FILTER_DATE}}">
+                <button type="submit">Filter</button>
+            </form>
+        </div>
+        
+        <table>
+            <tr>
+                <th>Token No</th><th>Patient ID</th><th>Name</th><th>Test</th>
+                <th>Mobile</th><th>Place</th><th>Blood Group</th>
+                <th>Prescription</th><th>Time</th><th>Venue</th>
+                <th>Booking Date</th>
+                <th>Upload Report</th>
+            </tr>
+            {{TOKEN_ROWS}}
+        </table>
+    </div>
+</body>
+</html>
